@@ -3,51 +3,124 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tour_app/ui/route/routes.dart';
 import '../../const/colors.dart';
 
+import '../styles/styles.dart';
 import '../widgets/button.dart';
 import '../widgets/icon_button.dart';
 
-class Onboarding extends StatefulWidget {
+class Onboarding extends StatelessWidget {
   Onboarding({super.key});
 
-  @override
-  State<Onboarding> createState() => _OnboardingState();
-}
-
-class _OnboardingState extends State<Onboarding> {
-  List items = [
-    {
-      'image': 'assets/images/onboarding-1.png',
-      'title': 'Welcome',
-      'description':
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. '
-    },
-    {
-      'image': 'assets/images/onboarding-2.png',
-      'title': 'Categories',
-      'description':
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-    },
-    {
-      'image': 'assets/images/onboarding-3.png',
-      'title': 'Support',
-      'description':
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-    },
+  // List items = [
+  List<String> _lottieFiles = [
+    'assets/files/welcome.json',
+    'assets/files/categories.json',
+    'assets/files/support.json',
   ];
 
-  int currentIndex = 0;
+  List<String> _title = ['Welcome', 'Categories', 'Support'];
+
+  List<String> _descriptions = [
+    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+  ];
+
+  RxInt currentIndex = 0.obs;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.backgroundColor,
-      body: SafeArea(
-          child: Center(
-              child: Column(
-        children: [
-          Container(
+    return SafeArea(
+      child: Scaffold(
+          body: Padding(
+        padding: EdgeInsets.all(32.w),
+        child: Column(children: [
+          Obx(
+            () => Expanded(
+                flex: 2,
+                child: Lottie.asset(_lottieFiles[currentIndex.toInt()])),
+          ),
+          Expanded(
+              flex: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: AppColor.backgroundColor,
+                    borderRadius: BorderRadius.circular(10.r),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(4.0, 4.0),
+                          blurRadius: 10,
+                          spreadRadius: 1.0),
+                      BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 5,
+                          spreadRadius: 1.0)
+                    ]),
+                child: Padding(
+                  padding: EdgeInsets.all(30.w),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Obx(() => Text(
+                              '${_title[currentIndex.toInt()]}',
+                              style: AppStyle().myTextStyle,
+                            )),
+                        Obx(
+                          () => Text('${_descriptions[currentIndex.toInt()]}'),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Obx(
+                              () => DotsIndicator(
+                                dotsCount: _lottieFiles.length,
+                                position: currentIndex.toDouble(),
+                                decorator: DotsDecorator(),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                if (currentIndex == 2) {
+                                  print('Finished');
+                                } else {
+                                  currentIndex + 1;
+                                }
+                              },
+                              child: Container(
+                                height: 37.h,
+                                width: 37.w,
+                                decoration: BoxDecoration(
+                                    color: AppColor.backgroundColor,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        offset: Offset(4.0, 4.0),
+                                      ),
+                                    ]),
+                              ),
+                            ),
+                          ],
+                        )
+                      ]),
+                ),
+              )),
+        ]),
+      )),
+    );
+  }
+}
+
+/*
+Container(
             height: 430.h,
             width: double.infinity,
             child: Center(
@@ -82,10 +155,10 @@ class _OnboardingState extends State<Onboarding> {
                     spreadRadius: 8.0,
                   ), //BoxShadow
                   BoxShadow(
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 207, 206, 206),
                     offset: const Offset(0.0, 0.0),
-                    blurRadius: 2.0,
-                    spreadRadius: 2.0,
+                    blurRadius: 5.0,
+                    spreadRadius: 5.0,
                   ),
                 ],
               ),
@@ -144,7 +217,7 @@ class _OnboardingState extends State<Onboarding> {
                               borderRadius: BorderRadius.circular(60.0),
                               color: AppColor.backgroundColor,
                               border: Border.all(
-                                  color: Colors.white,
+                                  color: AppColor.backgroundColor,
                                   width: 3.w,
                                   style: BorderStyle.solid),
                               boxShadow: [
@@ -168,7 +241,7 @@ class _OnboardingState extends State<Onboarding> {
                                 setState(() {});
                                 currentIndex++;
                               } else
-                                Navigator.pushNamed(context, '/splash');
+                                Get.toNamed(splash);
                             },
                             Icon: Icon(Icons.keyboard_double_arrow_right_sharp),
                           ),
@@ -180,8 +253,5 @@ class _OnboardingState extends State<Onboarding> {
               ),
             ),
           ),
-        ],
-      ))),
-    );
-  }
-}
+        
+ */
