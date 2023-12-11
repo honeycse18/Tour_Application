@@ -9,8 +9,6 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tour_app/ui/route/onboarding.dart';
 import 'package:tour_app/ui/route/routes.dart';
-import 'package:tour_app/ui/route/test.dart';
-
 import 'const/colors.dart';
 void main() {
   runApp(const MyApp());
@@ -18,7 +16,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
