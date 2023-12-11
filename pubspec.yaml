@@ -40,7 +40,12 @@ dependencies:
   google_fonts: ^4.0.4
   get: ^4.6.5
   lottie: ^2.3.2
-  
+  intl: ^0.18.1
+  toggle_switch: ^2.1.0
+  firebase_core: ^2.24.2
+  cloud_firestore: ^4.13.5
+  firebase_storage: ^11.5.5
+  firebase_auth: ^4.15.2
   
 dev_dependencies:
   flutter_test:
@@ -69,6 +74,7 @@ flutter:
     - assets/logo/
     - assets/images/
     - assets/files/
+    - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

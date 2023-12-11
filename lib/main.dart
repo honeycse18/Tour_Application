@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tour_app/ui/route/onboarding.dart';
 import 'package:tour_app/ui/route/routes.dart';
 import 'const/colors.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -37,4 +38,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
+//run hoise tahole.hmm..thanks a lot..wlc..anydesk ta ketey dissi tahole.ok
+// debug hoite ato time ney?ato time lage na to, may be problem ase akhono,output ashe ki na dekhi..ok

@@ -88,8 +88,8 @@ class Onboarding extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                if (currentIndex == 2) {
-                                  print('Finished');
+                                if (currentIndex == _lottieFiles.length - 1) {
+                                  Get.toNamed(signup);
                                 } else {
                                   currentIndex + 1;
                                 }
