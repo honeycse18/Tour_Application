@@ -1,18 +1,56 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tour_app/ui/route/onboarding.dart';
 import 'package:tour_app/ui/route/routes.dart';
 import 'const/colors.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
+  runApp(App());
+}
+
+class App extends StatelessWidget {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp(
+    name: "Tour_App",
+    options: FirebaseOptions(
+        apiKey: 'AIzaSyBsZvaPM6Gk84acC0f-yKzgQh6u4pCT7aQ',
+        appId: '1:848946061751:android:4484ebe7b08645741d8832',
+        projectId: 'tourappproject',
+        messagingSenderId: '848946061751'),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _initialization,
+      builder: ((context, snapshot) {
+        //check for error
+        if (snapshot.hasError) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        //once complete, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MyApp();
+        }
+        //otherwise, show something whilst waiting for initialization to complete
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +58,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(375, 812),
+      designSize: Size(428, 926),
       builder: (BuildContext context, Widget? child) {
         return GetMaterialApp(
           theme: ThemeData(
