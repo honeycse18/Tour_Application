@@ -106,6 +106,7 @@ class Onboarding extends StatelessWidget {
                                         offset: Offset(4.0, 4.0),
                                       ),
                                     ]),
+                                child: Icon(Icons.double_arrow),
                               ),
                             ),
                           ],

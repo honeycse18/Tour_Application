@@ -21,12 +21,12 @@ void main() async {
 
 class App extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp(
-    name: "Tour_App",
+    // name: "Tour_App",
     options: FirebaseOptions(
-        apiKey: 'AIzaSyBsZvaPM6Gk84acC0f-yKzgQh6u4pCT7aQ',
-        appId: '1:848946061751:android:4484ebe7b08645741d8832',
-        projectId: 'tourappproject',
-        messagingSenderId: '848946061751'),
+        apiKey: 'AIzaSyC06yp9OOO73z_nU9KpjNAYfgMxJfhsoA8',
+        appId: '1:51924670412:android:a99267efb7f3480f2a6f69',
+        projectId: 'tour-app-498ef',
+        messagingSenderId: '51924670412'),
   );
 
   @override
@@ -34,7 +34,7 @@ class App extends StatelessWidget {
     return FutureBuilder(
       future: _initialization,
       builder: ((context, snapshot) {
-        //check for error
+        //check for error 
         if (snapshot.hasError) {
           return Center(
             child: CircularProgressIndicator(),
@@ -76,5 +76,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-//run hoise tahole.hmm..thanks a lot..wlc..anydesk ta ketey dissi tahole.ok
-// debug hoite ato time ney?ato time lage na to, may be problem ase akhono,output ashe ki na dekhi..ok

@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "848946061751",
-    "project_id": "tourappproject",
-    "storage_bucket": "tourappproject.appspot.com"
+    "project_number": "51924670412",
+    "project_id": "tour-app-498ef",
+    "storage_bucket": "tour-app-498ef.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:848946061751:android:4484ebe7b08645741d8832",
+        "mobilesdk_app_id": "1:51924670412:android:a99267efb7f3480f2a6f69",
         "android_client_info": {
           "package_name": "com.example.tour_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBsZvaPM6Gk84acC0f-yKzgQh6u4pCT7aQ"
+          "current_key": "AIzaSyC06yp9OOO73z_nU9KpjNAYfgMxJfhsoA8"
         }
       ],
       "services": {
