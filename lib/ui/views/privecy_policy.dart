@@ -6,7 +6,8 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:tour_app/ui/route/routes.dart';
 import 'package:tour_app/ui/views/home.dart';
-import 'package:tour_app/ui/widgets/button.dart';
+
+import '../widgets/violetButton.dart';
 
 class PrivacyPolicy extends StatelessWidget {
   PdfViewerController? _pdfViewerController;

@@ -10,7 +10,13 @@ import '../../route/routes.dart';
 class User_Info {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   sendFromDataToDB(
-      String name, int phone, String address, String dob, String gender) async {
+    String name,
+    int phone,
+    String address,
+    String gender,
+    //String dob
+  ) async {
+    //String dob
     try {
       CollectionReference _course =
           FirebaseFirestore.instance.collection("user-form-data");
@@ -18,7 +24,7 @@ class User_Info {
         'name': name,
         'phone': phone,
         'address': address,
-        'dob': dob,
+        //  'dob': dob,
         'gender': gender,
       }).whenComplete(() {
         Fluttertoast.showToast(msg: "Added Successfully");

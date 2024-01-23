@@ -4,21 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tour_app/ui/route/routes.dart';
+import 'package:tour_app/ui/views/bottom_nav_pages/pages/nav_add.dart';
+import 'package:tour_app/ui/views/bottom_nav_pages/pages/nav_favourite.dart';
+import 'package:tour_app/ui/views/bottom_nav_pages/pages/nav_home.dart';
 
 class BottomNavController extends StatelessWidget {
   RxInt _currentIndex = 0.obs;
   RxBool _Drawer = false.obs;
-  final _pages = [
-    Container(
-      color: Colors.green,
-    ),
-    Container(
-      color: Colors.black,
-    ),
-    Container(
-      color: Colors.yellow,
-    )
-  ];
+  final _pages = [NavHome(), NavAdd(), NavFavourite()];
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +58,9 @@ class BottomNavController extends StatelessWidget {
                     BottomNavigationBarItem(
                         icon: Icon(Icons.add_outlined), label: "Add"),
                     BottomNavigationBarItem(
-                        icon: Icon(Icons.home_outlined), label: "Home"),
+                        icon: Icon(Icons.favorite_outline), label: "Favourite"),
                   ]),
+              body: _pages[_currentIndex.value],
             ),
           ),
         ));

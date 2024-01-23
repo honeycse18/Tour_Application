@@ -9,9 +9,12 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tour_app/const/app_colors.dart';
+import 'package:tour_app/const/app_strings.dart';
 import 'package:tour_app/ui/route/onboarding.dart';
 import 'package:tour_app/ui/route/routes.dart';
-import 'const/colors.dart';
+import 'package:tour_app/ui/route/splash.dart';
+import 'business_logic/app_languages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +37,7 @@ class App extends StatelessWidget {
     return FutureBuilder(
       future: _initialization,
       builder: ((context, snapshot) {
-        //check for error 
+        //check for error
         if (snapshot.hasError) {
           return Center(
             child: CircularProgressIndicator(),
@@ -54,23 +57,22 @@ class App extends StatelessWidget {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: Size(428, 926),
-      builder: (BuildContext context, Widget? child) {
+      builder: (_, child) {
         return GetMaterialApp(
-          theme: ThemeData(
-            scaffoldBackgroundColor: AppColor.backgroundColor,
-            textTheme: GoogleFonts.poppinsTextTheme(
-              Theme.of(context).textTheme.apply(),
-            ),
-          ),
           debugShowCheckedModeBanner: false,
+          title: AppStrings.appName,
+          translations: AppLanguages(),
+          locale: Locale('en', 'US'),
+          fallbackLocale: Locale('en', 'US'),
           initialRoute: splash,
           getPages: getPages,
-          // home: Splash(),
+          home: Splash(),
         );
       },
     );

@@ -4,14 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'package:tour_app/const/colors.dart';
 import 'package:tour_app/ui/styles/styles.dart';
-import 'package:tour_app/ui/widgets/button.dart';
 import 'package:intl/intl.dart';
-import 'package:tour_app/ui/widgets/text_field.dart';
 import 'package:tour_app/business_logic/form.dart';
-
 import '../route/routes.dart';
+import '../widgets/violetButton.dart';
 
 class User_form extends StatelessWidget {
   TextEditingController _nameController = TextEditingController();
@@ -19,24 +16,24 @@ class User_form extends StatelessWidget {
   TextEditingController _phoneNoController = TextEditingController();
 
   TextEditingController _addressController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
-  Rx<TextEditingController> _dobController = TextEditingController().obs;
-  //  DateTime selectedDate=DateTime.now();
-  Rx<DateTime> selectedDate = DateTime.now().obs;
-  late String dob;
+  // TextEditingController dateController = TextEditingController();
+  // Rx<TextEditingController> _dobController = TextEditingController().obs;
+  // // DateTime selectedDate=DateTime.now();
+  // Rx<DateTime> selectedDate = DateTime.now().obs;
+  // late String dob;
   String gender = "Male";
-  _selectDate(BuildContext context) async {
-    final selected = await showDatePicker(
-        context: context,
-        initialDate: DateTime(2023),
-        firstDate: DateTime(1990),
-        lastDate: DateTime(2023));
+  // _selectDate(BuildContext context) async {
+  //   final selected = await showDatePicker(
+  //       context: context,
+  //       initialDate: DateTime(2023),
+  //       firstDate: DateTime(1990),
+  //       lastDate: DateTime(2023));
 
-    if (selected != null && selected != selectedDate) {
-      _dobController.value.text =
-          "${selected.day}-${selected.month}-${selected.year}";
-    }
-  }
+  //   if (selected != null && selected != selectedDate) {
+  //     _dobController.value.text =
+  //         "${selected.day}-${selected.month}-${selected.year}";
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -68,20 +65,20 @@ class User_form extends StatelessWidget {
                   'Phone Number'),
               FormField(
                   _addressController, TextInputType.emailAddress, 'Address'),
-              Obx(
-                () => TextFormField(
-                  controller: _dobController.value,
-                  readOnly: true,
-                  decoration: InputDecoration(
-                      hintText: "Date of Birth",
-                      hintStyle: TextStyle(
-                        fontSize: 15.sp,
-                      ),
-                      suffixIcon: IconButton(
-                          onPressed: () => _selectDate(context),
-                          icon: Icon(Icons.calendar_month_rounded))),
-                ),
-              ),
+              // Obx(
+              //   () => TextFormField(
+              //     controller: _dobController.value,
+              //     readOnly: true,
+              //     decoration: InputDecoration(
+              //         hintText: "Date of Birth",
+              //         hintStyle: TextStyle(
+              //           fontSize: 15.sp,
+              //         ),
+              //         suffixIcon: IconButton(
+              //             onPressed: () => _selectDate(context),
+              //             icon: Icon(Icons.calendar_month_rounded))),
+              //   ),
+              // ),
               SizedBox(
                 height: 25.h,
               ),
@@ -101,11 +98,11 @@ class User_form extends StatelessWidget {
                 height: 60.h,
               ),
               VioletButton("Submit", () {
+                // print(_dobController.value.text);
                 User_Info().sendFromDataToDB(
                   _nameController.text,
                   int.parse(_phoneNoController.text),
                   _addressController.text,
-                  dob!,
                   gender,
                 );
               }),
@@ -124,6 +121,6 @@ Widget FormField(controller, inputType, hint) {
   return TextField(
     keyboardType: inputType,
     controller: controller,
-    decoration: AppStyle().textFieldDecoration(hint),
+    decoration: AppStyles().textFieldDecoration(hint),
   );
 }

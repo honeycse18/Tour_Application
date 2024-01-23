@@ -6,12 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
+import 'package:tour_app/const/app_colors.dart';
 import 'package:tour_app/ui/route/routes.dart';
-import '../../const/colors.dart';
-
 import '../styles/styles.dart';
-import '../widgets/button.dart';
-import '../widgets/icon_button.dart';
 
 class Onboarding extends StatelessWidget {
   Onboarding({super.key});
@@ -49,7 +46,7 @@ class Onboarding extends StatelessWidget {
               flex: 1,
               child: Container(
                 decoration: BoxDecoration(
-                    color: AppColor.backgroundColor,
+                    color: AppColors.scaffoldColor,
                     borderRadius: BorderRadius.circular(10.r),
                     boxShadow: [
                       BoxShadow(
@@ -71,7 +68,7 @@ class Onboarding extends StatelessWidget {
                       children: [
                         Obx(() => Text(
                               '${_title[currentIndex.toInt()]}',
-                              style: AppStyle().myTextStyle,
+                              style: AppStyles().myTextStyle,
                             )),
                         Obx(
                           () => Text('${_descriptions[currentIndex.toInt()]}'),
@@ -98,7 +95,7 @@ class Onboarding extends StatelessWidget {
                                 height: 37.h,
                                 width: 37.w,
                                 decoration: BoxDecoration(
-                                    color: AppColor.backgroundColor,
+                                    color: AppColors.scaffoldColor,
                                     shape: BoxShape.circle,
                                     boxShadow: [
                                       BoxShadow(

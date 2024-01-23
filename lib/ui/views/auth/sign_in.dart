@@ -4,11 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:tour_app/business_logic/auth.dart';
-import 'package:tour_app/const/colors.dart';
+import 'package:tour_app/const/app_colors.dart';
 import 'package:tour_app/ui/styles/styles.dart';
-import 'package:tour_app/ui/widgets/button.dart';
 
 import '../../route/routes.dart';
+import '../../widgets/violetButton.dart';
 
 class SignIn extends StatelessWidget {
   TextEditingController _emailController = TextEditingController();
@@ -34,12 +34,12 @@ class SignIn extends StatelessWidget {
               TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                decoration: AppStyle().textFieldDecoration('E-mail Address'),
+                decoration: AppStyles().textFieldDecoration('E-mail Address'),
               ),
               TextFormField(
                 controller: _passwordController,
                 keyboardType: TextInputType.visiblePassword,
-                decoration: AppStyle().textFieldDecoration('Password'),
+                decoration: AppStyles().textFieldDecoration('Password'),
               ),
               SizedBox(
                 height: 40.h,
@@ -96,7 +96,7 @@ class SignIn extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w600,
-                              color: AppColor.purple),
+                              color: AppColors.violetColor),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => Get.toNamed(signup)),
                     ])),
