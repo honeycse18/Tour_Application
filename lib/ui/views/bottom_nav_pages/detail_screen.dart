@@ -9,18 +9,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/details_heading_description.dart';
 
-class DetailsSCreen extends StatefulWidget {
-  DetailsSCreen(this.detailsData);
+class DetailsScreen extends StatefulWidget {
+  DetailsScreen(this.detailsData);
   Map detailsData;
 
   @override
-  State<DetailsSCreen> createState() => _DetailsSCreenState();
+  State<DetailsScreen> createState() => _DetailsScreenState();
 }
 
-class _DetailsSCreenState extends State<DetailsSCreen> {
+class _DetailsScreenState extends State<DetailsScreen> {
   final RxInt _currentIndex = 0.obs;
-
-//add to favourite
   addtoFavourite() async {
     FirebaseFirestore.instance
         .collection('Users-Favourite')

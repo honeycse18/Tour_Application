@@ -81,7 +81,7 @@ List<GetPage> getPages = [
   GetPage(
     name: detailsScreen,
     page: () {
-      DetailsSCreen _detailsSCreen = Get.arguments;
+      DetailsScreen _detailsSCreen = Get.arguments;
       return _detailsSCreen;
     },
   ),

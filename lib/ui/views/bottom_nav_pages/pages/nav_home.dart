@@ -18,7 +18,7 @@ class NavHome extends StatefulWidget {
 
 class _NavHomeState extends State<NavHome> {
   final RxInt _currentIndex = 0.obs;
-
+  //collectionName
   final CollectionReference _refference = FirebaseFirestore.instance
       .collection('all-data')
       .doc(FirebaseAuth.instance.currentUser!.email)
@@ -32,40 +32,20 @@ class _NavHomeState extends State<NavHome> {
   late Future<QuerySnapshot> _futureDataTopPlaces;
 
   //carousel-Image
-  List<String> carouselImages = [
-    'assets/images/cover-one.jpeg',
-    'assets/images/cover-one.webp',
-    'assets/images/cover-two.webp',
-    'assets/images/cover-three.webp',
-  ];
-
-  List<String> touristPlaces = [
-    'assets/images/debtakhum.jpeg',
-    'assets/images/debtakhum.jpeg',
-    'assets/images/debtakhum.jpeg',
-    'assets/images/debtakhum.jpeg',
-  ];
-  int currentIndex = 0;
+  List<String> _carouselImages = [];
   var _dotPosition = 0;
   fetchCarouselImages() async {
     QuerySnapshot qn =
         await FirebaseFirestore.instance.collection("carousel-image").get();
     setState(() {
       for (int i = 0; i < qn.docs.length; i++) {
-        carouselImages.add(
+        _carouselImages.add(
           qn.docs[i]["img"],
         );
         // print(qn.docs[i]["img"]);
       }
     });
     return qn.docs;
-  }
-
-  Widget buildView() {
-    return Container(
-      width: 300,
-      child: Text(carouselImages[currentIndex]),
-    );
   }
 
   @override
@@ -86,27 +66,40 @@ class _NavHomeState extends State<NavHome> {
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
-            CarouselSlider.builder(
-                itemCount: carouselImages.length,
-                itemBuilder: (context, _, index) {
-                  return buildView();
-                },
+            CarouselSlider(
+                items: _carouselImages
+                    .map((item) => Padding(
+                          padding: EdgeInsets.only(left: 3, right: 3),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage(item),
+                                    fit: BoxFit.fill)),
+                          ),
+                        ))
+                    .toList(),
                 options: CarouselOptions(
-                    height: 130,
+                    height: 200.h,
                     enlargeCenterPage: true,
-                    aspectRatio: 2.0,
-                    onPageChanged: (index, reason) {
+                    autoPlay: true,
+                    aspectRatio: 16 / 9,
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enableInfiniteScroll: true,
+                    autoPlayAnimationDuration: Duration(milliseconds: 800),
+                    viewportFraction: 0.9,
+                    onPageChanged: (val, carouselPageChangedReason) {
                       setState(() {
-                        currentIndex = index;
+                        _currentIndex.value = val;
                       });
-                    },
-                    autoPlay: false)),
-            DotsIndicator(
-              dotsCount: carouselImages.length,
-              position: currentIndex.toDouble(),
-              decorator: const DotsDecorator(
-                color: Colors.grey, // Inactive color
-                activeColor: Colors.blue,
+                    })),
+            SizedBox(
+              height: 5.h,
+            ),
+            Obx(
+              () => DotsIndicator(
+                dotsCount:
+                    _carouselImages.length == 0 ? 1 : _carouselImages.length,
+                position: _currentIndex.value.toDouble(),
               ),
             ),
             Padding(
@@ -150,46 +143,21 @@ class _NavHomeState extends State<NavHome> {
             SizedBox(
               height: 5.h,
             ),
-            SizedBox(
-              height: 40,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: touristPlaces.length,
-                  itemBuilder: (_, index) {
-                    return Padding(
-                      padding: EdgeInsets.only(right: 10),
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(18)),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Center(
-                                child: Text(
-                              touristPlaces[index],
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            )),
-                          )),
-                    );
-                  },
-                ),
-              ),
-            ),
-
-            // Container(
-            //     height: 180.h,
-            //     child:ListView(
-            //       scrollDirection:Axis.vertical,
-            //       children: widget.data.images.map(e)=>Container(decoration:BoxDecoration(borderRadius:BorderRadius.circular(10),
-            //       border:Border.all(color: Colors.black,width:5)),
-            //       child:CacheNetworkImage(imageUrl:e, height:100,fit:BoxFit.cover,progressIndicatorBuilder:(context,url,progress)=>Center(child:CircularProgressIndicator(value:progress.progress,)))),
-            //     )),
-
+            Container(
+                height: 180.h,
+                child: FutureBuilder<QuerySnapshot>(
+                    future: _futureDataForYou,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text("Error");
+                      }
+                      if (snapshot.hasData) {
+                        List<Map> items = parseData(snapshot.data);
+                        return forYou(items);
+                      }
+                      return Center(child: CircularProgressIndicator());
+                    })),
             SizedBox(
               height: 15.h,
             ),
@@ -202,37 +170,20 @@ class _NavHomeState extends State<NavHome> {
               height: 5.h,
             ),
             Container(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: GridView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: touristPlaces.length,
-                  itemBuilder: (_, index) {
-                    return Padding(
-                      padding: EdgeInsets.only(right: 10),
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(18)),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Center(
-                                child: Text(
-                              touristPlaces[index],
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            )),
-                          )),
-                    );
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-                ),
-              ),
-            ),
-
+                height: 180.h,
+                child: FutureBuilder<QuerySnapshot>(
+                    future: _futureDataRecentlyAdded,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text("Error");
+                      }
+                      if (snapshot.hasData) {
+                        List<Map> items = parseData(snapshot.data);
+                        return recentlyAdded(items);
+                      }
+                      return Center(child: CircularProgressIndicator());
+                    })),
             SizedBox(
               height: 15.h,
             ),
@@ -294,7 +245,7 @@ ListView forYou(List<Map<dynamic, dynamic>> items) {
         padding: EdgeInsets.only(right: 12.w),
         child: InkWell(
           onTap: () =>
-              Get.toNamed(detailsScreen, arguments: DetailsSCreen(thisItem)),
+              Get.toNamed(detailsScreen, arguments: DetailsScreen(thisItem)),
           child: Container(
             width: 100.w,
             height: 180.h,
@@ -348,7 +299,7 @@ ListView recentlyAdded(List<Map<dynamic, dynamic>> items) {
         padding: EdgeInsets.only(right: 12.w),
         child: InkWell(
           onTap: () =>
-              Get.toNamed(detailsScreen, arguments: DetailsSCreen(thisItem)),
+              Get.toNamed(detailsScreen, arguments: DetailsScreen(thisItem)),
           child: Container(
             width: 100.w,
             height: 180.h,
@@ -402,7 +353,7 @@ ListView topPlaces(List<Map<dynamic, dynamic>> items) {
         padding: EdgeInsets.only(right: 5.w),
         child: InkWell(
           onTap: () =>
-              Get.toNamed(detailsScreen, arguments: DetailsSCreen(thisItem)),
+              Get.toNamed(detailsScreen, arguments: DetailsScreen(thisItem)),
           child: Container(
             width: 80.w,
             height: 80.h,

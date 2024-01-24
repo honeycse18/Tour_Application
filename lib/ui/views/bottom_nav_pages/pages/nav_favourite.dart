@@ -39,7 +39,7 @@ class _NavFavouriteState extends State<NavFavourite> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Get.toNamed(DetailsSCreen(data) as String);
+                              Get.toNamed(DetailsScreen(data) as String);
                             },
                             child: Padding(
                               padding: EdgeInsets.only(top: 20.h),
